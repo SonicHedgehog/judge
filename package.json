@@ -17,7 +17,8 @@
 	"main": "lib/judge",
 	"dependencies": {
 		"mkdirp": "^0.5.0",
-		"npmi": "^0.1.2"
+		"npmi": "^0.1.2",
+		"which": "^1.0.8"
 	},
 	"devDependencies": {
 		"grunt": "^0.4.5",
