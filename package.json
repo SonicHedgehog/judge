@@ -16,6 +16,7 @@
 	"license": "BSD-2-Clause",
 	"main": "lib/judge",
 	"dependencies": {
+		"mkdirp": "^0.5.0",
 		"npmi": "^0.1.2"
 	},
 	"devDependencies": {
