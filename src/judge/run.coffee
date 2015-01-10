@@ -1,3 +1,7 @@
+fs = require 'fs'
+path = require 'path'
+
+async = require 'async'
 which = require 'which'
 
 originalExtensions = {}
@@ -6,12 +10,36 @@ module.exports = (judgeCase, packagePath, command, args = [], callback) ->
 	which command, (err, commandPath) ->
 		callback err if err
 
-		overrideExtensionHandlers()
-		clearModuleCache()
+		getModulesInCase judgeCase, packagePath, (err, modules) ->
+			callback err if err
 
-		process.argv = ['node', commandPath].concat args
+			overrideExtensionHandlers()
+			clearModuleCache()
 
-		require commandPath
+			process.argv = ['node', commandPath].concat args
+
+			require commandPath
+
+getModulesInCase = (judgeCase, packagePath, callback) ->
+	judgeCasePath = path.join packagePath, 'node_modules', '.judge', judgeCase
+	modules = []
+
+	fs.readdir path.join(judgeCasePath, 'node_modules'), (err, files) ->
+		callback err if err
+
+		async.each files, (file, callback) ->
+			# Skip hidden directories.
+			return callback() if file.indexOf('.') is 0
+
+			fs.stat path.join(judgeCasePath, 'node_modules', file), (err, stats) ->
+				callback err if err
+
+				modules.push file if stats.isDirectory()
+				callback()
+		, (err) ->
+			callback err if err
+
+			callback null, modules
 
 overrideExtensionHandlers = ->
 	for extension of require.extensions
