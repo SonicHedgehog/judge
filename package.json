@@ -16,6 +16,9 @@
 	"license": "BSD-2-Clause",
 	"main": "lib/judge",
 	"bin": "bin/judge",
+	"scripts": {
+		"prepublish": "grunt build"
+	},
 	"files": [
 		"bin",
 		"lib",
