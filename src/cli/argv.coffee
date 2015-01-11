@@ -5,7 +5,7 @@ judge = require '../judge'
 module.exports = (argv) ->
 	parser.command 'install'
 	.callback (opts) ->
-		judge.install process.cwd(), (err) ->
+		judge.install process.cwd(), opts[1], (err) ->
 			throw err if err
 
 	parser.command 'run'
