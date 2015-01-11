@@ -83,6 +83,10 @@ In general, the environment provided by `judge run` may not be exactly the same 
 
 That said, using the `--overwrite` option, for example to improve your CI tests, should be unproblematic.
 
+## Release History
+
+See [CHANGELOG.md](./CHANGELOG.md).
+
 ## License
 
 Judge is licensed under the BSD 2-clause license. See [LICENSE](./LICENSE) for the full license text.
