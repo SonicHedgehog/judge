@@ -13,7 +13,7 @@ module.exports = (judgeCase, packagePath, command, args = [], callback) ->
 		getModulesInCase judgeCase, packagePath, (err, modules) ->
 			callback err if err
 
-			overrideExtensionHandlers()
+			overrideExtensionHandlers judgeCase, modules, packagePath
 			clearModuleCache()
 
 			process.argv = ['node', commandPath].concat args
@@ -41,7 +41,7 @@ getModulesInCase = (judgeCase, packagePath, callback) ->
 
 			callback null, modules
 
-overrideExtensionHandlers = ->
+overrideExtensionHandlers = (judgeCase, modulesToOverride, packagePath) ->
 	for extension of require.extensions
 		do (extension) ->
 			# Delete any non-default extensions such as .coffee.
@@ -52,8 +52,22 @@ overrideExtensionHandlers = ->
 			unless originalExtensions[extension]
 				originalExtensions[extension] = require.extensions[extension]
 
+			standardModulePaths = []
+
+			for moduleToOverride in modulesToOverride
+				standardModulePaths.push path.resolve packagePath, 'node_modules', moduleToOverride
+
 			if require.extensions[extension].length is 2
 				require.extensions[extension] = (module, filename) ->
+					for standardModulePath in standardModulePaths
+						if filename.indexOf(standardModulePath) is 0
+							moduleSubPath = filename.substr standardModulePath.length
+							judgeCaseModulePath = path.join standardModulePath, '..', '.judge',
+								judgeCase, 'node_modules', moduleToOverride, moduleSubPath
+
+							# Replace module path.
+							module.id = module.filename = filename = judgeCaseModulePath
+
 					originalExtensions[extension](module, filename)
 
 clearModuleCache = ->
