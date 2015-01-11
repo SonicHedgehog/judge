@@ -1,0 +1,41 @@
+{
+	"name": "judge",
+	"version": "0.1.0",
+	"author": "Jakob Krigovsky <jakob.krigovsky@gmail.com>",
+	"description": "Test your Node.js package against different versions of dependencies.",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/SonicHedgehog/judge.git"
+	},
+	"keywords": [
+		"judge",
+		"test",
+		"versions",
+		"dependencies"
+	],
+	"license": "BSD-2-Clause",
+	"main": "lib/judge",
+	"bin": "bin/judge",
+	"scripts": {
+		"prepublish": "grunt build"
+	},
+	"files": [
+		"bin",
+		"lib",
+		"CHANGELOG.md",
+		"LICENSE",
+		"README.md"
+	],
+	"dependencies": {
+		"async": "^0.9.0",
+		"mkdirp": "^0.5.0",
+		"nomnom": "^1.8.1",
+		"npmi": "^0.1.2",
+		"which": "^1.0.8"
+	},
+	"devDependencies": {
+		"grunt": "^0.4.5",
+		"grunt-contrib-clean": "^0.6.0",
+		"grunt-contrib-coffee": "^0.12.0"
+	}
+}
