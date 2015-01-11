@@ -68,7 +68,30 @@ overrideExtensionHandlers = (judgeCase, modulesToOverride, packagePath) ->
 							# Replace module path.
 							module.id = module.filename = filename = judgeCaseModulePath
 
+							# Replace search paths.
+							searchPathsToAdd = [path.join judgeCaseModulePath, '..', 'node_modules']
+							module.paths.shift()
+
+							loop
+								searchPath = getNextSearchPath searchPathsToAdd[searchPathsToAdd.length - 1]
+								break if searchPath is module.paths[0]
+								searchPathsToAdd.push searchPath
+
+							module.paths = searchPathsToAdd.concat module.paths
+
 					originalExtensions[extension](module, filename)
+
+getNextSearchPath = (searchPath) ->
+	searchPath = path.join searchPath, '..', '..'
+
+	lastPosition = searchPath.length - "#{path.sep}node_modules".length
+	lastIndex = searchPath.indexOf "#{path.sep}node_modules", lastPosition
+
+	if lastIndex is -1
+		return path.join searchPath, 'node_modules'
+	else
+		# We are already in a node_modules directory.
+		return searchPath
 
 clearModuleCache = ->
 	for module of require.cache
