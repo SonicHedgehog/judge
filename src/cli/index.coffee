@@ -1,0 +1,1 @@
+judgeCli = module.exports = {}
