@@ -16,6 +16,11 @@ module.exports = (judgeCase, packagePath, command, args = [], callback) ->
 			overrideExtensionHandlers judgeCase, modules, packagePath
 			clearModuleCache()
 
+			# If command is Node.js itself, require first argument directly.
+			if command is 'node' or command is 'nodejs'
+				commandPath = path.resolve args[0]
+				args.shift()
+
 			process.argv = ['node', commandPath].concat args
 
 			require commandPath
