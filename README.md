@@ -2,6 +2,8 @@
 
 Test your Node.js package against different versions of dependencies.
 
+*Note:* Judge is a work in progress and may not work very well, yet. See [Stability and limitations](#stability-and-limitations).
+
 ## What is this good for?
 
 Let’s say you wrote a middleware for [Express](http://expressjs.com) which is compatible with both Express 3 and Express 4. You use [Travis CI](https://travis-ci.org) to ensure that your tests pass, even against multiple versions of Node.js. However, your tests won’t run against Express 3.
@@ -66,6 +68,20 @@ env:
   - "JUDGE_CASE=express-3"
   - "JUDGE_CASE=express-4"
 ```
+
+## Stability and limitations
+
+Judge is currently a work in progress. For example, you may encounter the following issues and annoyances:
+
+- No built-in help command
+- Undefined behavior when passing invalid or unexpected parameters
+- May not work well with Node addons
+- Does not work with non-Node.js commands
+- Judge has no test suite, yet
+
+In general, the environment provided by `judge run` may not be exactly the same as if you start the program using `node` itself.
+
+That said, using the `--overwrite` option, for example to improve your CI tests, should be unproblematic.
 
 ## License
 
