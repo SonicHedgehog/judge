@@ -8,4 +8,9 @@ module.exports = (argv) ->
 		judge.install process.cwd(), (err) ->
 			throw err if err
 
+	parser.command 'run'
+	.callback (opts) ->
+		judge.run opts[1], process.cwd(), opts[2], opts._[3..], (err) ->
+			throw err if err
+
 	parser.parse()
