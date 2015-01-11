@@ -4,8 +4,10 @@ judge = require '../judge'
 
 module.exports = (argv) ->
 	parser.command 'install'
+	.option 'overwrite',
+		flag: true
 	.callback (opts) ->
-		judge.install process.cwd(), opts[1], (err) ->
+		judge.install process.cwd(), opts[1], opts.overwrite, (err) ->
 			throw err if err
 
 	parser.command 'run'
