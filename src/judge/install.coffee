@@ -4,13 +4,23 @@ async = require 'async'
 
 judge = require './index'
 
-module.exports = (packagePath, callback) ->
+module.exports = (packagePath, judgeCase, callback) ->
+	# (packagePath, callback) → defaults to all Judge cases
+	if arguments.length is 2
+		callback = judgeCase
+		judgeCase = null
+
 	judge.installPackage packagePath, (err, result) ->
 		callback err if err
 
 		judge.getCases packagePath, (err, cases) ->
 			callback err if err
 
+			if judgeCase
+				newCases = {}
+				newCases[judgeCase] = cases[judgeCase]
+				cases = newCases
+			
 			async.each Object.keys(cases), (judgeCase, callback) ->
 				caseDependencies = cases[judgeCase]
 
