@@ -25,6 +25,8 @@ module.exports = (judgeCase, packagePath, command, args = [], callback) ->
 
 			require commandPath
 
+			callback()
+
 getModulesInCase = (judgeCase, packagePath, callback) ->
 	judgeCasePath = path.join packagePath, 'node_modules', '.judge', judgeCase
 	modules = []
