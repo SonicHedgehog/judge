@@ -8,10 +8,10 @@ originalExtensions = {}
 
 module.exports = (judgeCase, packagePath, command, args = [], callback) ->
 	which command, (err, commandPath) ->
-		callback err if err
+		return callback err if err
 
 		getModulesInCase judgeCase, packagePath, (err, modules) ->
-			callback err if err
+			return callback err if err
 
 			overrideExtensionHandlers judgeCase, modules, packagePath
 			clearModuleCache()
@@ -25,24 +25,26 @@ module.exports = (judgeCase, packagePath, command, args = [], callback) ->
 
 			require commandPath
 
+			callback()
+
 getModulesInCase = (judgeCase, packagePath, callback) ->
 	judgeCasePath = path.join packagePath, 'node_modules', '.judge', judgeCase
 	modules = []
 
 	fs.readdir path.join(judgeCasePath, 'node_modules'), (err, files) ->
-		callback err if err
+		return callback err if err
 
 		async.each files, (file, callback) ->
 			# Skip hidden directories.
 			return callback() if file.indexOf('.') is 0
 
 			fs.stat path.join(judgeCasePath, 'node_modules', file), (err, stats) ->
-				callback err if err
+				return callback err if err
 
 				modules.push file if stats.isDirectory()
 				callback()
 		, (err) ->
-			callback err if err
+			return callback err if err
 
 			callback null, modules
 

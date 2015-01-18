@@ -14,6 +14,6 @@ module.exports = (packageName, packageVersion, targetPath, callback) ->
 			path: targetPath
 
 	npmi npmiOptions, (err, result) ->
-		callback err if err
+		return callback err if err
 
 		callback null, result

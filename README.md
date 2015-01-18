@@ -55,7 +55,7 @@ $ ./node_modules/.bin/judge run express-4 node test.js
 
 ## Integration with Travis CI
 
-You can configure Travis CI to use Judge when running your tests. You’ll need to replace `npm install` with `judge install $JUDGE_CASE --overwrite`. Then specify every Judge case you want to test against as an environment variable.
+You can configure Travis CI to use Judge when running your tests. Simply add `judge install $JUDGE_CASE --overwrite` to your install process. Then specify every Judge case you want to test against as an environment variable.
 
 ```yaml
 language: node_js
@@ -63,6 +63,7 @@ node_js:
   - "0.10"
   - "0.8"
 install:
+  - "npm install"
   - "./node_modules/.bin/judge install $JUDGE_CASE --overwrite"
 env:
   - "JUDGE_CASE=express-3"

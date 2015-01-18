@@ -11,14 +11,14 @@ module.exports = (packagePath, judgeCase, overwrite, callback) ->
 		judgeCase = null
 	# (packagePath, judgeCase, callback) → overwrite defaults to false
 	else if arguments.length is 3
-		calback = overwrite
+		callback = overwrite
 		overwrite = false
 
 	judge.installPackage packagePath, (err, result) ->
-		callback err if err
+		return callback err if err
 
 		judge.getCases packagePath, (err, cases) ->
-			callback err if err
+			return callback err if err
 
 			if judgeCase
 				newCases = {}
@@ -29,7 +29,7 @@ module.exports = (packagePath, judgeCase, overwrite, callback) ->
 				caseDependencies = cases[judgeCase]
 
 				judge.prepareCase judgeCase, packagePath, (err) ->
-					callback err if err
+					return callback err if err
 
 					async.each Object.keys(caseDependencies), (packageName, callback) ->
 						packageVersion = caseDependencies[packageName]
@@ -37,10 +37,14 @@ module.exports = (packagePath, judgeCase, overwrite, callback) ->
 							path.join packagePath, 'node_modules', '.judge', judgeCase
 
 						judge.installPackage packageName, packageVersion, targetPath, (err, result) ->
-								callback err if err
+								return callback err if err
 
 								callback null
 					, (err) ->
-						callback err if err
+						return callback err if err
+
+						callback null
 			, (err) ->
-				callback err if err
+				return callback err if err
+
+				callback null
