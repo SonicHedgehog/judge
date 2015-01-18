@@ -42,5 +42,9 @@ module.exports = (packagePath, judgeCase, overwrite, callback) ->
 								callback null
 					, (err) ->
 						return callback err if err
+
+						callback null
 			, (err) ->
 				return callback err if err
+
+				callback null
