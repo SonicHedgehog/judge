@@ -11,7 +11,7 @@ module.exports = (packagePath, judgeCase, overwrite, callback) ->
 		judgeCase = null
 	# (packagePath, judgeCase, callback) → overwrite defaults to false
 	else if arguments.length is 3
-		calback = overwrite
+		callback = overwrite
 		overwrite = false
 
 	judge.installPackage packagePath, (err, result) ->
