@@ -1,6 +1,6 @@
 {
 	"name": "judge",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"author": "Jakob Krigovsky <jakob.krigovsky@gmail.com>",
 	"description": "Test your Node.js package against different versions of dependencies.",
 	"repository": {
