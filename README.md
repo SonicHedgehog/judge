@@ -1,5 +1,25 @@
 # Judge
 
+![Deprecated](https://img.shields.io/badge/deprecated-×-red.svg)
+
+**Judge has been deprecated.** I recommend to simply use `npm install`.
+On Travis CI you can use environment variables, for example:
+
+```yaml
+language: node_js
+node_js:
+  - "6"
+env:
+  matrix:
+    - EXPRESS_VERSION=4
+    - EXPRESS_VERSION=3
+install:
+  - npm install
+  - npm install express@$EXPRESS_VERSION
+```
+
+---
+
 Test your Node.js package against different versions of dependencies.
 
 *Note:* Judge is a work in progress and may not work very well, yet. See [Stability and limitations](#stability-and-limitations).
